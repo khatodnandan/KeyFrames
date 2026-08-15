@@ -1,42 +1,56 @@
-
-
-import AnimatedBackground from '../components/AnimatedBackground';
-import AnimatedButton from '../components/AnimatedButton';
-import '../styles/home.css';
+import { Link } from "react-router-dom";
+import { FiArrowRight } from "react-icons/fi";
+import useDocumentTitle from "../hooks/useDocumentTitle";
+import "../styles/home.css";
 
 export default function Home() {
-  const handleExplore = () => {
-    const section = document.getElementById('our-services');
-    if (section) {
-      window.scrollTo({ top: section.offsetTop - 50, behavior: 'smooth' });
-    } else {
-      // fallback: navigate to services page
-      window.location.href = '/services';
-    }
-  };
+  const name = localStorage.getItem("name");
+
+  useDocumentTitle("Dashboard", "Your Keyframes Media dashboard.");
 
   return (
-    <div className="home-page">
-      {/* Animated background behind content */}
-      <AnimatedBackground />
+    <div className="dash-home">
+      <section className="section dash-home-hero">
+        <div className="container">
+          <span className="section-eyebrow">Dashboard</span>
+          <h1>Welcome{name ? `, ${name}` : ""}.</h1>
+          <p>
+            Manage your account, keep track of notifications and revisit our services and
+            portfolio — all from here.
+          </p>
 
-      {/* Gradient overlay for readability */}
-      <div className="home-overlay"></div>
-
-      {/* Foreground content */}
-      <div className="home-content">
-        <h1>Welcome to KEYFRAMES Dashboard</h1>
-        <p>Your ultimate digital marketing partner</p>
-        <AnimatedButton onClick={handleExplore}>
-          Explore Services
-        </AnimatedButton>
-      </div>
-
-      {/* Services section for scrolling */}
-      <section id="our-services" className="our-services-section">
-        {/* Your services content goes here */}
+          <div className="dash-home-links">
+            <Link to="/Dashboard/services" className="card card--interactive dash-home-link">
+              <h3>Our Services</h3>
+              <p>Browse everything we offer.</p>
+              <span>
+                Explore <FiArrowRight aria-hidden="true" />
+              </span>
+            </Link>
+            <Link to="/Dashboard/portfolio" className="card card--interactive dash-home-link">
+              <h3>Portfolio</h3>
+              <p>See recent project work.</p>
+              <span>
+                View work <FiArrowRight aria-hidden="true" />
+              </span>
+            </Link>
+            <Link to="/Dashboard/pricing" className="card card--interactive dash-home-link">
+              <h3>Pricing</h3>
+              <p>Compare plans and get started.</p>
+              <span>
+                See plans <FiArrowRight aria-hidden="true" />
+              </span>
+            </Link>
+            <Link to="/Dashboard/myaccount" className="card card--interactive dash-home-link">
+              <h3>My Account</h3>
+              <p>Review your account details.</p>
+              <span>
+                Manage <FiArrowRight aria-hidden="true" />
+              </span>
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );
 }
-

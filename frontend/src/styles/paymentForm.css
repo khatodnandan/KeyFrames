@@ -1,173 +1,64 @@
-/* Payment Form – Professional Design with Soothing Background */
-
-.payment-form-container {
+.payment-form-page,
+.payment-success-page {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #e0f7fa, #f0f4f8); /* soothing soft gradient */
-  padding: 20px;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  background: radial-gradient(120% 100% at 50% 0%, #16161c 0%, var(--bg) 60%);
 }
 
 .payment-form-box {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  max-width: 500px;
   width: 100%;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 2;
+  max-width: 480px;
 }
 
-.payment-form-box::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  z-index: -1;
+.back-button {
+  margin-bottom: var(--space-5);
+  padding-left: 4px;
 }
 
-.payment-form-box h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #1e3c72;
+.payment-form-box h1 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-5);
 }
 
-.payment-form-box h2 span {
-  color: #2a5298;
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
-.payment-form label {
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #333;
-}
-
-.payment-form input[type="text"],
-.payment-form input[type="email"],
-.payment-form input[type="tel"],
-.payment-form input[type="file"] {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  box-sizing: border-box;
-  transition: border 0.3s, box-shadow 0.3s;
-}
-
-.payment-form input:focus {
-  border-color: #1e3c72;
-  box-shadow: 0 0 5px rgba(30, 60, 114, 0.3);
-  outline: none;
+.payment-form .form-alert {
+  margin-bottom: 0;
 }
 
 .screenshot-preview {
-  display: block;
-  max-width: 100%;
-  margin: 10px auto 20px auto;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-.payment-form button {
   width: 100%;
-  padding: 12px;
-  background: linear-gradient(90deg, #1e3c72, #2a5298);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  margin-top: 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-border);
 }
 
-.payment-form button:hover {
-  background: linear-gradient(90deg, #0072ff, #00c6ff);
-}
-
-/* .success-message {
+.payment-success-card {
+  max-width: 440px;
   text-align: center;
-  font-size: 1.2rem;
-  color: #ffffff;
-} */
-/* Floating popup message */
-.success-message {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #4caf50; /* green for success */
-  color: #ffffff;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  z-index: 1000;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  text-align: center;
-  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
 }
 
-.success-message.error {
-  background-color: #f44336; /* red for errors */
+.payment-success-card svg {
+  font-size: 2.75rem;
+  color: var(--success);
 }
 
-.success-message span {
-  font-weight: bold;
-  color: #2a5298;
+.payment-success-card p {
+  margin-bottom: var(--space-3);
 }
 
-/* ------------------- Responsive Styles ------------------- */
-@media (max-width: 768px) {
-  .payment-form-box {
-    padding: 35px 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .payment-form-box {
-    padding: 30px 15px;
-  }
-
-  .payment-form button {
-    font-size: 0.95rem;
-    padding: 10px;
-  }
-
-  .payment-form-box h2 {
-    font-size: 1.5rem;
-  }
-
-  .payment-form label {
-    font-size: 0.9rem;
-  }
-}
-
-
-.back-button {
-  display: inline-block;
-  margin-bottom: 15px;
-  padding: 6px 12px;
-  background: #f0f4f8;
-  color: #1e3c72;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: 0.3s;
-}
-
-.back-button:hover {
-  background: #e0f7fa;
-  border-color: #1e3c72;
+.payment-success-card strong {
+  color: var(--text-primary);
 }

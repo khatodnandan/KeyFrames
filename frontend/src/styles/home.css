@@ -1,85 +1,52 @@
-.home-page {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow: visible;
-  color: white;
-
-  /* Gradient background instead of image */
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  background-size: cover;
-  background-position: center;
+.dash-home-hero {
+  padding-top: var(--space-8);
+  background: radial-gradient(120% 100% at 50% 0%, #16161c 0%, var(--bg) 60%);
 }
 
-/* Overlay to improve text readability */
-.home-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  z-index: 1;
-  pointer-events: none;
+.dash-home-hero > .container > p {
+  max-width: 560px;
+  font-size: var(--fs-lg);
+  margin: var(--space-4) 0 var(--space-8);
 }
 
-/* Foreground content */
-.home-content {
-  position: relative;
-  z-index: 10;
+.dash-home-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.dash-home-link {
   display: flex;
   flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dash-home-link h3 {
+  font-size: 1.1rem;
+}
+
+.dash-home-link p {
+  font-size: var(--fs-sm);
+  flex-grow: 1;
+}
+
+.dash-home-link span {
+  display: inline-flex;
   align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--accent);
 }
 
-.home-content h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  text-shadow: 0 0 15px #00c6ff;
-  animation: fadeInDown 2s ease forwards;
+@media (max-width: 1080px) {
+  .dash-home-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.home-content p {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
-  text-shadow: 0 0 10px #00c6ff;
-  animation: fadeInUp 2s ease forwards;
-}
-
-/* Button styling */
-.cta-btn, .animated-btn {
-  padding: 12px 30px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 30px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  animation: fadeIn 2.5s ease forwards;
-}
-
-/* Animations */
-@keyframes fadeInDown {
-  0% { opacity: 0; transform: translateY(-50px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp {
-  0% { opacity: 0; transform: translateY(50px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-/* Optional: services section placeholder for scroll target */
-.our-services-section {
-  min-height: 100vh;
-  padding: 80px 20px;
-  background-color: #f5f5f5; /* light section background */
+@media (max-width: 520px) {
+  .dash-home-links {
+    grid-template-columns: 1fr;
+  }
 }

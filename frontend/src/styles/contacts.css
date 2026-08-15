@@ -1,41 +1,92 @@
-.contacts-page {
-  padding: 50px;
-  text-align: center;
-  color: #000000;
+.contact-hero {
+  padding-top: var(--space-9);
+  padding-bottom: var(--space-10);
+  background: radial-gradient(120% 100% at 50% 0%, #16161c 0%, var(--bg) 60%);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.contact-hero-copy {
+  font-size: var(--fs-lg);
+  margin: var(--space-4) 0 var(--space-6);
+  max-width: 460px;
+}
+
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.contact-info-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+}
+
+.contact-info-list svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.contact-info-list a {
+  color: var(--text-secondary);
+  transition: color var(--dur-fast);
+}
+
+.contact-info-list a:hover {
+  color: var(--accent);
+}
+
+.contact-form-card {
+  padding: var(--space-6);
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
-  margin: 30px auto 0;
-  gap: 15px;
+  gap: var(--space-4);
 }
 
-.contact-form input, 
-.contact-form textarea {
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
 }
 
-.contact-form textarea {
-  resize: vertical;
-  height: 120px;
+.contact-success {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
 }
 
-.contact-form button {
-  padding: 12px 25px;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #1e3c72, #2a5298);
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: 0.3s;
+.contact-success svg {
+  font-size: 2.5rem;
+  color: var(--success);
 }
 
-.contact-form button:hover {
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
+.contact-success p {
+  margin-bottom: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .contact-form-row {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,66 +1,78 @@
-/* .page-content {
-  padding: 50px;
-  color: #ffffffff;
+.notifications-hero {
+  padding-top: var(--space-8);
+  background: radial-gradient(120% 100% at 50% 0%, #16161c 0%, var(--bg) 60%);
 }
 
-.page-content ul {
-  list-style: none;
-  padding: 0;
-}
-
-.page-content ul li {
-  background: #f0f8ff;
-  margin: 10px 0;
-  padding: 15px;
-  border-left: 5px solid #2a5298;
-  border-radius: 5px;
-} */
-
-.notifications-page {
-  padding: 30px;
-  text-align: center;
-  color: #1e3c72;
+.notifications-hero h1 {
+  margin-bottom: var(--space-6);
 }
 
 .notifications-list {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: var(--space-4);
+  max-width: 680px;
 }
 
 .notification-card {
-  padding: 15px 20px;
-  border-radius: 15px;
-  background: #f1f5f9; /* soft plain background */
-  text-align: left;
-  position: relative;
-  transition: transform 0.2s;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
 }
 
-.notification-card:hover {
-  transform: translateY(-3px);
+.notification-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
-.notification-card.global {
-  border-left: 5px solid #1e3c72;
+.notification-card.global .notification-icon {
+  background: var(--accent-2-soft);
+  color: var(--accent-2);
 }
 
-.notification-card.personal {
-  border-left: 5px solid #0072ff;
+.notification-message {
+  color: var(--text-primary);
+  margin-bottom: 4px;
 }
 
-.notif-type {
-  font-weight: bold;
+.notification-time {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
 }
 
-.notif-time {
-  font-size: 0.8rem;
-  color: #555;
-  position: absolute;
-  right: 15px;
-  top: 15px;
+.notification-skeleton {
+  height: 74px;
+  background: linear-gradient(90deg, var(--bg-elevated-2) 25%, rgba(255, 255, 255, 0.06) 37%, var(--bg-elevated-2) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) 0;
+  color: var(--text-tertiary);
+}
+
+.notifications-empty svg {
+  font-size: 2rem;
 }

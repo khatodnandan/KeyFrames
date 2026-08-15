@@ -1,37 +1,54 @@
-
-
+import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-// Pages
+import PublicLayout from "./components/PublicLayout";
+import PageLoader from "./components/PageLoader";
+
+// Public marketing pages (small, loaded eagerly)
+import Landing from "./pages/LandingPage";
+import About from "./pages/About";
+import OurServices from "./pages/OurServices";
+import Portfolio from "./pages/Portfolio";
+import Pricing from "./pages/Pricing";
+import Contacts from "./pages/Contacts";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import Pricing from "./pages/Pricing";
 
-// Components
-import PaymentForm from "./components/PaymentForm";
+// App shell pages (heavier — code-split)
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const PaymentForm = lazy(() => import("./components/PaymentForm"));
 
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Authentication */}
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Public marketing site */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<Landing />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<OurServices />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/contact" element={<Contacts />} />
+          </Route>
 
-        {/* Dashboards */}
-        <Route path="/Dashboard/*" element={<Dashboard />} />
-        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+          {/* Authentication */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Pricing and Payment */}
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/payment-form" element={<PaymentForm />} />
+          {/* Authenticated app */}
+          <Route path="/Dashboard/*" element={<Dashboard />} />
+          <Route path="/AdminDashboard" element={<AdminDashboard />} />
 
-        {/* Fallback for unknown routes */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+          {/* Payment */}
+          <Route path="/payment-form" element={<PaymentForm />} />
+
+          {/* Fallback for unknown routes */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }

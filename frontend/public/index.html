@@ -1,23 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <script>
-    var _paq = window._paq = window._paq || [];
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="http://localhost/matomo/";
-      _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', '1']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0c" />
+
+  <title>Keyframes Media | Video, Design &amp; Digital Production Studio</title>
+  <meta name="description" content="Keyframes Media is a digital creative studio offering video editing, motion graphics, branding, social media, photography and web development for brands that want to be seen." />
+  <meta name="keywords" content="Keyframes Media, video editing, graphic design, branding, VFX, motion graphics, social media marketing, photography, videography, web development, digital marketing agency" />
+  <meta name="author" content="Keyframes Media" />
+  <link rel="canonical" href="https://keyframes.vercel.app/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Keyframes Media" />
+  <meta property="og:title" content="Keyframes Media | Video, Design &amp; Digital Production Studio" />
+  <meta property="og:description" content="We turn ideas into digital experiences — video, design, branding and motion for brands that want to be seen." />
+  <meta property="og:url" content="https://keyframes.vercel.app/" />
+  <meta property="og:image" content="https://keyframes.vercel.app/favicon.svg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Keyframes Media | Video, Design &amp; Digital Production Studio" />
+  <meta name="twitter:description" content="We turn ideas into digital experiences — video, design, branding and motion for brands that want to be seen." />
+
+  <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    // Matomo analytics — only loads when a real collector host is configured,
+    // so local/preview builds never emit failed requests to localhost.
+    (function () {
+      var matomoHost = window.__MATOMO_URL__;
+      if (!matomoHost) return;
+      var _paq = (window._paq = window._paq || []);
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
+      _paq.push(["setTrackerUrl", matomoHost + "matomo.php"]);
+      _paq.push(["setSiteId", "1"]);
+      var d = document,
+        g = d.createElement("script"),
+        s = d.getElementsByTagName("script")[0];
+      g.async = true;
+      g.src = matomoHost + "matomo.js";
+      s.parentNode.insertBefore(g, s);
     })();
   </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KEYFRAMES</title>
 </head>
 <body>
+  <noscript>You need to enable JavaScript to run Keyframes Media.</noscript>
   <div id="root"></div>
 </body>
 </html>

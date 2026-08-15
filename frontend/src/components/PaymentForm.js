@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/paymentForm.css"; // separate CSS for form
+import { FiArrowLeft, FiCheckCircle } from "react-icons/fi";
+import useDocumentTitle from "../hooks/useDocumentTitle";
+import "../styles/paymentForm.css";
 
 export default function PaymentForm() {
+  useDocumentTitle("Payment", "Submit your Keyframes Media plan payment details.");
+
   const location = useLocation();
   const navigate = useNavigate();
   const selectedPlan = location.state?.planName || "No plan selected";
@@ -17,6 +21,8 @@ export default function PaymentForm() {
   });
   const [preview, setPreview] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const API_URL = process.env.REACT_APP_API_URL || "https://keyframes.onrender.com";
 
@@ -24,7 +30,7 @@ export default function PaymentForm() {
     const { name, value, files } = e.target;
     if (name === "screenshot") {
       setFormData({ ...formData, screenshot: files[0] });
-      setPreview(URL.createObjectURL(files[0]));
+      setPreview(files[0] ? URL.createObjectURL(files[0]) : null);
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -32,9 +38,10 @@ export default function PaymentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!formData.screenshot) {
-      alert("Please upload payment screenshot!");
+      setError("Please upload a payment screenshot.");
       return;
     }
 
@@ -46,6 +53,7 @@ export default function PaymentForm() {
     data.append("plan", selectedPlan);
     data.append("screenshot", formData.screenshot);
 
+    setSubmitting(true);
     try {
       const response = await axios.post(`${API_URL}/api/payment`, data, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -54,80 +62,122 @@ export default function PaymentForm() {
       if (response.data.success || response.status === 200) {
         setSubmitted(true);
       } else {
-        alert("❌ Failed to submit payment. Try again.");
+        setError("Failed to submit payment. Please try again.");
       }
     } catch (err) {
       console.error("Payment submission error:", err.response?.data || err.message);
-      alert("❌ Error submitting form. Try again.");
+      setError("Error submitting form. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  if (submitted)
+  if (submitted) {
     return (
-      <h2 className="success-message">
-        Thank you! Your payment details for <span>{selectedPlan}</span> have been submitted.
-      </h2>
+      <div className="payment-success-page">
+        <div className="card payment-success-card">
+          <FiCheckCircle aria-hidden="true" />
+          <h1>Thank you!</h1>
+          <p>
+            Your payment details for <strong>{selectedPlan}</strong> have been submitted. We'll
+            confirm shortly.
+          </p>
+          <button className="btn btn-primary" onClick={() => navigate("/pricing")}>
+            Back to Pricing
+          </button>
+        </div>
+      </div>
     );
+  }
 
   return (
-    <div className="payment-form-container">
-      <div className="payment-form-box">
-        {/* Go Back Button */}
-        <button className="back-button" onClick={() => navigate("/pricing")}>
-          &larr; Back to Pricing
+    <div className="payment-form-page">
+      <div className="card payment-form-box">
+        <button className="btn btn-ghost btn-sm back-button" onClick={() => navigate("/pricing")}>
+          <FiArrowLeft aria-hidden="true" /> Back to Pricing
         </button>
 
-        <h2>Payment Form - <span>{selectedPlan}</span></h2>
-        <form onSubmit={handleSubmit} className="payment-form">
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+        <h1>
+          Payment for <span className="text-gradient">{selectedPlan}</span>
+        </h1>
 
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+        {error && (
+          <div className="form-alert form-alert--error" role="alert">
+            {error}
+          </div>
+        )}
 
-          <label>Phone Number</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
+        <form onSubmit={handleSubmit} className="payment-form" noValidate>
+          <div className="field">
+            <label htmlFor="pf-name">Name</label>
+            <input
+              id="pf-name"
+              className="field-input"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <label>Payment Details</label>
-          <input
-            type="text"
-            name="paymentDetails"
-            value={formData.paymentDetails}
-            onChange={handleChange}
-            required
-          />
+          <div className="field">
+            <label htmlFor="pf-email">Email</label>
+            <input
+              id="pf-email"
+              className="field-input"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <label>Upload Payment Screenshot</label>
-          <input
-            type="file"
-            name="screenshot"
-            accept="image/*"
-            onChange={handleChange}
-            required
-          />
+          <div className="field">
+            <label htmlFor="pf-phone">Phone Number</label>
+            <input
+              id="pf-phone"
+              className="field-input"
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          {preview && <img src={preview} alt="Preview" className="screenshot-preview" />}
+          <div className="field">
+            <label htmlFor="pf-details">Payment Details</label>
+            <input
+              id="pf-details"
+              className="field-input"
+              type="text"
+              name="paymentDetails"
+              placeholder="Transaction ID / reference"
+              value={formData.paymentDetails}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <button type="submit" disabled={!formData.screenshot}>
-            Submit Payment
+          <div className="field">
+            <label htmlFor="pf-screenshot">Upload Payment Screenshot</label>
+            <input
+              id="pf-screenshot"
+              className="field-input"
+              type="file"
+              name="screenshot"
+              accept="image/*"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {preview && <img src={preview} alt="Payment screenshot preview" className="screenshot-preview" />}
+
+          <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={!formData.screenshot || submitting}>
+            {submitting ? "Submitting…" : "Submit Payment"}
           </button>
         </form>
       </div>

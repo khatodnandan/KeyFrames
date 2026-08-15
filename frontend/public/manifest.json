@@ -1,0 +1,15 @@
+{
+  "short_name": "Keyframes",
+  "name": "Keyframes Media",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0a0a0c",
+  "background_color": "#0a0a0c"
+}

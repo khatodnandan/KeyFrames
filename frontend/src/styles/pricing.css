@@ -1,60 +1,80 @@
-.pricing-page {
-  padding: 50px;
-  text-align: center;
-  color: #1e3c72;
-}
-
-.pricing-page h2 {
-  color: white; /* change only the main heading */
+.pricing-hero {
+  padding-top: var(--space-9);
+  background: radial-gradient(120% 100% at 50% 0%, #16161c 0%, var(--bg) 60%);
 }
 
 .pricing-grid {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
 }
 
 .pricing-card {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
 
-.pricing-card:hover {
-  transform: translateY(-10px);
+.pricing-card--featured {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-accent);
 }
 
-.pricing-card .price {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 10px 0;
+.pricing-badge {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
 }
 
-.pricing-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
+.pricing-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 4px;
 }
 
-.pricing-card ul li {
-  margin: 5px 0;
+.pricing-tagline {
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-4);
 }
 
-.pricing-card button {
-  padding: 10px 25px;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #1e3c72, #2a5298);
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: 0.3s;
+.pricing-price {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-5);
 }
 
-.pricing-card button:hover {
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
+.pricing-price span {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.pricing-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  flex-grow: 1;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.pricing-features svg {
+  color: var(--success);
+}
+
+@media (max-width: 1080px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-inline: auto;
+  }
 }

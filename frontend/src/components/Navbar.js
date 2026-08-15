@@ -1,58 +1,90 @@
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { FiLogOut } from "react-icons/fi";
+import Logo from "./Logo";
+import "../styles/navbar.css";
 
-import { Link, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
-import '../styles/navbar.css';
+const LINKS = [
+  { to: "/Dashboard/home", label: "Home" },
+  { to: "/Dashboard/services", label: "Services" },
+  { to: "/Dashboard/portfolio", label: "Portfolio" },
+  { to: "/Dashboard/pricing", label: "Pricing" },
+  { to: "/Dashboard/contacts", label: "Contact" },
+  { to: "/Dashboard/notifications", label: "Notifications" },
+  { to: "/Dashboard/myaccount", label: "My Account" },
+];
 
 export default function Navbar() {
-  const location = useLocation();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Remove previous background classes
-    document.body.className = '';
-
-    // Map paths to background classes
-    const bgMap = {
-      '/dashboard': 'bg-home',
-      '/dashboard/home': 'bg-home',
-      '/dashboard/myaccount': 'bg-account',
-      '/dashboard/services': 'bg-services',
-      '/dashboard/notifications': 'bg-notifications',
-      '/dashboard/portfolio': 'bg-portfolio',
-      '/dashboard/pricing': 'bg-pricing',
-      '/dashboard/contacts': 'bg-contacts',
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
     };
+  }, [open]);
 
-    // Find matching class (startsWith for subpaths)
-    let applied = false;
-    Object.keys(bgMap).forEach((path) => {
-      if (location.pathname === path || location.pathname.startsWith(path)) {
-        document.body.classList.add(bgMap[path]);
-        applied = true;
-      }
-    });
-
-    // Fallback if no match
-    if (!applied) {
-      document.body.classList.add('bg-home');
-    }
-  }, [location]);
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   return (
-    <nav className="navbar">
-      <img
-        src={process.env.PUBLIC_URL + '/images/logo.jpg'}
-        alt="KEYFRAMES Logo"
-        className="logo"
-      />
-      <ul>
-        <li><Link to="/dashboard/home">Home</Link></li>
-        <li><Link to="/dashboard/myaccount">My Account</Link></li>
-        <li><Link to="/dashboard/services">Our Services</Link></li>
-        <li><Link to="/dashboard/notifications">Notifications</Link></li>
-        <li><Link to="/dashboard/portfolio">Portfolio</Link></li>
-        <li><Link to="/dashboard/pricing">Pricing</Link></li>
-        <li><Link to="/dashboard/contacts">Contacts</Link></li>
-      </ul>
-    </nav>
+    <header className="app-nav">
+      <div className="container app-nav-inner">
+        <Logo to="/Dashboard/home" />
+
+        <nav className="app-nav-links" aria-label="Dashboard">
+          {LINKS.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) => `app-nav-link ${isActive ? "is-active" : ""}`}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <button className="btn btn-ghost btn-sm app-nav-logout" onClick={handleLogout}>
+          <FiLogOut aria-hidden="true" /> Logout
+        </button>
+
+        <button
+          className={`pub-nav-toggle app-nav-toggle ${open ? "is-open" : ""}`}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="app-mobile-menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+
+      {createPortal(
+        <div id="app-mobile-menu" className={`app-nav-mobile ${open ? "is-open" : ""}`}>
+          <nav aria-label="Dashboard mobile">
+            {LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) => `pub-nav-mobile-link ${isActive ? "is-active" : ""}`}
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+          <button className="btn btn-secondary btn-block" onClick={handleLogout}>
+            <FiLogOut aria-hidden="true" /> Logout
+          </button>
+        </div>,
+        document.body
+      )}
+    </header>
   );
 }

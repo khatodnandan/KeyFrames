@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
-import "../styles/global.css";
+import { FiBell, FiGlobe, FiUser } from "react-icons/fi";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 import "../styles/notifications.css";
 
 export default function Notifications() {
+  useDocumentTitle("Notifications", "Your Keyframes Media notifications.");
+
   const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
-  // ------------------ API URL ------------------
   const API_URL = process.env.REACT_APP_API_URL || "https://keyframes.onrender.com";
 
-  // ------------------ Fetch Notifications ------------------
   const fetchNotifications = async () => {
     try {
       const res = await axios.get(`${API_URL}/api/notifications/${userId}`, {
@@ -27,6 +29,8 @@ export default function Notifications() {
       }
     } catch (err) {
       console.error("Error fetching notifications:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,24 +57,41 @@ export default function Notifications() {
 
   return (
     <div className="notifications-page">
-      <h2>Notifications</h2>
-      {notifications.length === 0 ? (
-        <p>No notifications yet</p>
-      ) : (
-        <div className="notifications-list">
-          {notifications.map((notif) => (
-            <div key={notif._id} className={`notification-card ${notif.type}`}>
-              <span className="notif-type">
-                {notif.type === "personal" ? "(Personal) " : "(Global) "}
-              </span>
-              {notif.message}
-              <span className="notif-time">
-                {new Date(notif.createdAt).toLocaleString()}
-              </span>
+      <section className="section notifications-hero">
+        <div className="container">
+          <span className="section-eyebrow">Updates</span>
+          <h1>Notifications</h1>
+
+          {loading ? (
+            <div className="notifications-list">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="card notification-skeleton" aria-hidden="true" />
+              ))}
             </div>
-          ))}
+          ) : notifications.length === 0 ? (
+            <div className="notifications-empty">
+              <FiBell aria-hidden="true" />
+              <p>No notifications yet — you're all caught up.</p>
+            </div>
+          ) : (
+            <div className="notifications-list">
+              {notifications.map((notif) => (
+                <div key={notif._id} className={`card notification-card ${notif.type}`}>
+                  <span className="notification-icon">
+                    {notif.type === "personal" ? <FiUser aria-hidden="true" /> : <FiGlobe aria-hidden="true" />}
+                  </span>
+                  <div>
+                    <p className="notification-message">{notif.message}</p>
+                    <span className="notification-time">
+                      {new Date(notif.createdAt).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </section>
     </div>
   );
 }

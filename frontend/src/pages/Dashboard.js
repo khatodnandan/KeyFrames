@@ -11,7 +11,7 @@ import Contacts from './Contacts';
 
 export default function Dashboard() {
   return (
-    <div style={{ position: 'relative', minHeight: '100vh' }}>
+    <div className="app-shell">
       <Navbar />
 
       <Routes>
