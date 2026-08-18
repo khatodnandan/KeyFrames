@@ -129,8 +129,8 @@ const server = http.createServer(app);
 // ALLOWED ORIGINS
 // ------------------------------
 const allowedOrigins = [
-  "http://localhost:3000",           // Local dev
-  "https://keyframes.vercel.app",    // Vercel frontend
+  "http://localhost:3000",  
+  "https://key-frames.vercel.app"        // Vercel frontend
 ];
 
 // ------------------------------
